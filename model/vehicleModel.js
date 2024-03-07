@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 // schema design
 const vehicleSchema = new mongoose.Schema({
-    vehcileModel: {
+    vehicleModel: {
         type: String,
         required: [true, 'vehicke model is required']
     },
@@ -20,7 +20,7 @@ const vehicleSchema = new mongoose.Schema({
         required: [true, 'driver is required'],
     },
     driverMobileNumber: {
-        type: String,
+        type: Number,
         required: [true, 'mobile Number is required'],
     },
     driverAddress: {
@@ -28,7 +28,7 @@ const vehicleSchema = new mongoose.Schema({
         required: [true, 'driver Address is required'],
     },
     numberOfPassenger: {
-        type: String,
+        type: Number,
         required: [true, 'numbner Of Passenger is required'],
     },
     referencePeopleName: {

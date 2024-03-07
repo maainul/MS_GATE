@@ -1,40 +1,47 @@
-import VehicleModel from "../model/vehicleModel.js"
-
+import VehicleModel from "../model/vehicleModel.js";
+import { validateVehicle } from '../validation/validator.js';
 
 export const vehicleEntryController = async (req, res) => {
     try {
-        const newVeh = new VehicleModel(req.body)
-        await newVeh.save()
-        res.status(201).json({ success: true, newVeh })
+        const { error, value } = validateVehicle(req.body);
+        if (error) {
+            const formattedErrors = error.details.map(detail => {
+                return {
+                    label: detail.context.label,
+                    message: detail.message.replace(/"/g, '')
+                };
+            });
+
+            return res.status(400).json({
+                success: false,
+                error: formattedErrors
+            });
+        }
+
+        const newVehicle = await VehicleModel.create(value);
+        res.status(201).json({ success: true, newVehicle });
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             success: false,
             error: error.message
-        })
+        });
     }
-}
+};
 
 export const getVehiclesController = async (req, res) => {
     try {
-        const data = await VehicleModel.find()
-        console.error('Get All Vehicle:', data)
-        return res.status(201).send({
+        const data = await VehicleModel.find();
+        console.error('Get All Vehicle:', data);
+        return res.status(200).json({
             success: true,
             message: 'Vehicle List',
             data,
         });
-
     } catch (error) {
-        const status = error.status || 500
-        return res.status(status).send({
+        return res.status(500).json({
             success: false,
             message: 'Error In Get All Vehicle List',
             error: error.message || error,
         });
     }
-}
-
-
-
-
-
+};
