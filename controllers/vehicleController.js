@@ -5,6 +5,7 @@ import { validateVehicle } from './../validation/VehicleValidation.js';
 
 export const vehicleEntryController = async (req, res) => {
     try {
+        // joi valiadtion
         const { error, value } = validateVehicle(req.body);
         if (error) {
             const formattedErrors = error.details.map(detail => {
@@ -17,6 +18,16 @@ export const vehicleEntryController = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 error: formattedErrors
+            });
+        }
+
+        // Check Alreay Vehicle with Number already exists or Not
+        const data = await VehicleModel.findOne(req.body.numberPlate)
+        if (data) {
+            return res.status(400).json({
+                success: false,
+                label: "vehicle.numberPlate",
+                message: "Number Plate Alreay Exists"
             });
         }
 

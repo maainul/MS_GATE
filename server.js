@@ -23,7 +23,7 @@ app.use(morgan('dev'))
 app.use(express.json())
 
 app.use(cors({
-    origin: ["http://localhost:3000", "https://gate-frontend.netlify.app"],
+    origin: ["http://localhost:3002", "https://gate-frontend.netlify.app"],
     credentials: true,
 }))
 
