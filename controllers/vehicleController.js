@@ -1,5 +1,7 @@
-import VehicleModel from "../model/vehicleModel.js";
-import { validateVehicle } from '../validation/validator.js';
+
+import VehicleModel from '../model/vehicleModel.js'
+import { validateVehicle } from './../validation/VehicleValidation.js';
+
 
 export const vehicleEntryController = async (req, res) => {
     try {
@@ -18,7 +20,7 @@ export const vehicleEntryController = async (req, res) => {
             });
         }
 
-        const newVehicle = await VehicleModel.create(value);
+        const newVehicle = await VehicleModel.create(value)
         res.status(201).json({ success: true, newVehicle });
     } catch (error) {
         res.status(500).json({

@@ -1,48 +1,88 @@
 import mongoose from "mongoose";
 
 
-// schema design
+// Define a schema for the reference person
+const referencePersonSchema = new mongoose.Schema({
+  name: String,
+})
+
+// Define a schema for the Vehicle
 const vehicleSchema = new mongoose.Schema({
-    vehicleModel: {
-        type: String,
-        required: [true, 'vehicke model is required']
-    },
-    vehicleColor: {
-        type: String,
-        required: [true, 'vehicle color is required'],
-    },
-    vehicleNumber: {
-        type: String,
-        required: [true, 'vehicle number is required'],
-    },
-    driverName: {
-        type: String,
-        required: [true, 'driver is required'],
-    },
-    driverMobileNumber: {
-        type: Number,
-        required: [true, 'mobile Number is required'],
-    },
-    driverAddress: {
-        type: String,
-        required: [true, 'driver Address is required'],
-    },
-    numberOfPassenger: {
-        type: Number,
-        required: [true, 'numbner Of Passenger is required'],
-    },
-    referencePeopleName: {
-        type: String,
-        required: [true, 'reference People Name is required'],
-    },
-    visitingPurpose: {
-        type: String,
-        required: [true, 'visiting Purpose is required'],
-    },
-    tokenNumber:{
-        type:String,
-    }
-}, { timestamps: true });
+  name: String,
+  color: String,
+  model: String,
+  numberPlate: String
+})
+
+// Define a schema for the Driver
+const driverSchema = new mongoose.Schema(
+  {
+    name: String,
+    photo: String,
+    address: String,
+    phoneNumber: String
+  }
+)
+
+// Define a schema for the visitor
+const visitorSchema = new mongoose.Schema({
+  referencePepple: [referencePersonSchema], // Array of reference persons
+  numberOfPassernters: Number,
+  purpose: String,
+})
 
 
-export default mongoose.model("Vehicle", vehicleSchema)
+// Vehicle Entry Schema
+const vehicleEntrySchema = new mongoose.Schema({
+  vehicle: vehicleSchema,
+  drivers: [driverSchema],
+  visitors: [visitorSchema], // Array of visitors
+  entryTimes: [Date],
+  lastUpdate: Date
+});
+
+export default mongoose.model("Vehicle", vehicleEntrySchema)
+
+/*
+{
+   "_id": ObjectId("entry_id"),
+   "vehicle": {
+     "name": "Toyota Camry",
+     "color": "Black",
+     "model": "2021",
+     "numberPlate": "ABC123"
+   },
+   "drivers": [
+     {
+       "name": "John Doe",
+       "photo": "driver_photo_url",
+       "address": "123 Main St, City",
+       "phoneNumber": "123-456-7890"
+     },
+     {
+       "name": "Jane Smith",
+       "photo": "driver_photo_url",
+       "address": "456 Elm St, City",
+       "phoneNumber": "987-654-3210"
+     }
+   ],
+   "visitors": [
+     {
+       "referencePeopleName": ["Jane Doe", "John Smith"],
+       "numberOfPassengers": 2,
+       "purpose": "Meeting"
+     },
+     {
+       "referencePeopleName": ["Alice Smith", "Bob Johnson"],
+       "numberOfPassengers": 1,
+       "purpose": "Delivery"
+     }
+   ],
+   "entryTimes": [
+     ISODate("entry_time_1"),
+     ISODate("entry_time_2")
+   ],
+   "lastUpdate": ISODate("last_update_time")
+}
+*/
+
