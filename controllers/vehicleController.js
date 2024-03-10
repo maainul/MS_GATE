@@ -14,15 +14,16 @@ export const vehicleEntryController = async (req, res) => {
                     message: detail.message.replace(/"/g, '')
                 };
             });
-
             return res.status(400).json({
                 success: false,
                 error: formattedErrors
             });
         }
 
-        // Check Alreay Vehicle with Number already exists or Not
-        const data = await VehicleModel.findOne(req.body.numberPlate)
+        // Check Alreay Vehicle with Number already exists or Not]
+        const data = await VehicleModel.findOne({ 'vehicle.numberPlate': req.body.vehicle.numberPlate });
+        console.log("Querying for vehicle with numberPlate:", data);
+        console.log("Query Result:", data);
         if (data) {
             return res.status(400).json({
                 success: false,
@@ -30,7 +31,6 @@ export const vehicleEntryController = async (req, res) => {
                 message: "Number Plate Alreay Exists"
             });
         }
-
         const newVehicle = await VehicleModel.create(value)
         res.status(201).json({ success: true, newVehicle });
     } catch (error) {

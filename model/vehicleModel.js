@@ -26,8 +26,8 @@ const driverSchema = new mongoose.Schema(
 
 // Define a schema for the visitor
 const visitorSchema = new mongoose.Schema({
-  referencePepple: [referencePersonSchema], // Array of reference persons
-  numberOfPassernters: Number,
+  referencePeople: [referencePersonSchema], // Array of reference persons
+  numberOfPassengers: Number,
   purpose: String,
 })
 

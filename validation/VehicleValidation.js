@@ -13,7 +13,7 @@ const driverSchema = Joi.object({
 
 // Define a schema for the visitor
 const visitorSchema = Joi.object({
-    referencePeople: Joi.array().items(Joi.string().required()), // Array of employee _id values
+    referencePeople: Joi.array().items(Joi.object().required()), // Array of employee _id values
     numberOfPassengers: Joi.number().required(),
     purpose: Joi.string().required(),
 });
