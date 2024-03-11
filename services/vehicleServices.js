@@ -25,11 +25,13 @@ export const getAllVehicleListWithPagination = async ({ req }) => {
     const limit = Number(req.query.limit) || 10
     const skip = (page - 1) * limit
 
-    queryResult = queryResult.skip(skip).limit(queryResult)
+    queryResult = queryResult.skip(skip).limit(limit)
 
     //Count 
+    // Total Data Count Based on Query and Search
     const toalVehiclesBasedOnQueryResult = await VehicleModel.countDocuments(queryResult)
-    const totalVehicleBasedOnQueryObject = await VehicleModel.countDocuments(queryObject)
+    // Total Data Count
+    const totalVehicleBasedOnQueryObject = await VehicleModel.countDocuments()
 
     // Number of pages
     const numOfPage = Math.ceil(totalVehicleBasedOnQueryObject / limit)
@@ -39,6 +41,7 @@ export const getAllVehicleListWithPagination = async ({ req }) => {
 
     return {
         toalVehiclesBasedOnQueryResult,
+        totalVehicleBasedOnQueryObject,
         vehicles,
         numOfPage
     }
