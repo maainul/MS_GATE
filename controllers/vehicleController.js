@@ -1,6 +1,7 @@
 
 import VehicleModel from '../model/vehicleModel.js'
 import { validateVehicle } from './../validation/VehicleValidation.js';
+import { getAllVehicleListWithPagination } from "../services/vehicleServices.js";
 
 
 export const vehicleEntryController = async (req, res) => {
@@ -43,7 +44,7 @@ export const vehicleEntryController = async (req, res) => {
 
 export const getVehiclesController = async (req, res) => {
     try {
-        const data = await VehicleModel.find();
+        const data = await getAllVehicleListWithPagination({ req });
         console.error('Get All Vehicle:', data);
         return res.status(200).json({
             success: true,
