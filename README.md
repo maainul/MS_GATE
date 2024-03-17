@@ -216,3 +216,10 @@ VehicleEntry.aggregate([
   console.log("Vehicle entries count for the last month:", result);
 });
 ```
+
+
+
+nvm ls
+nvm use node 19.4
+npm install
+npm run dev
