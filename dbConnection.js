@@ -10,7 +10,7 @@ const connectDB = async () => {
       CT = process.env.MONGO_LOCAL_URL;
     }
 
-    const conn = await mongoose.connect(CT, { useNewUrlParser: true, useUnifiedTopology: true });
+    const conn = await mongoose.connect(CT);
     console.log(
       `Conneted To Mongodb Databse ${conn.connection.host}`.bgMagenta.white
     );

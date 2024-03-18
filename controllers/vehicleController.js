@@ -8,6 +8,7 @@ export const vehicleEntryController = async (req, res) => {
     try {
         // joi valiadtion
         const { error, value } = validateVehicle(req.body);
+
         if (error) {
             const formattedErrors = error.details.map(detail => {
                 return {
@@ -20,7 +21,6 @@ export const vehicleEntryController = async (req, res) => {
                 error: formattedErrors
             });
         }
-
         // Check Alreay Vehicle with Number already exists or Not]
         const data = await VehicleModel.findOne({ 'vehicle.numberPlate': req.body.vehicle.numberPlate });
         console.log("Querying for vehicle with numberPlate:", data);
