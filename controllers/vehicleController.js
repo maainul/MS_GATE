@@ -8,7 +8,6 @@ export const vehicleEntryController = async (req, res) => {
     try {
         // joi valiadtion
         const { error, value } = validateVehicle(req.body);
-
         if (error) {
             const formattedErrors = error.details.map(detail => {
                 return {
@@ -23,8 +22,6 @@ export const vehicleEntryController = async (req, res) => {
         }
         // Check Alreay Vehicle with Number already exists or Not]
         const data = await VehicleModel.findOne({ 'vehicle.numberPlate': req.body.vehicle.numberPlate });
-        console.log("Querying for vehicle with numberPlate:", data);
-        console.log("Query Result:", data);
         if (data) {
             return res.status(400).json({
                 success: false,
@@ -33,6 +30,7 @@ export const vehicleEntryController = async (req, res) => {
             });
         }
         const newVehicle = await VehicleModel.create(value)
+        console.log(newVehicle)
         res.status(201).json({ success: true, newVehicle });
     } catch (error) {
         res.status(500).json({
