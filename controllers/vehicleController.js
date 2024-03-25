@@ -6,7 +6,7 @@ import { getAllVehicleListWithPagination } from "../services/vehicleServices.js"
 
 export const vehicleEntryController = async (req, res) => {
     try {
-        // joi valiadtion
+        // joi validation
         const { error, value } = validateVehicle(req.body);
         if (error) {
             const formattedErrors = error.details.map(detail => {
@@ -26,7 +26,7 @@ export const vehicleEntryController = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 label: "vehicle.numberPlate",
-                message: "Number Plate Alreay Exists"
+                message: "Number Plate Already Exists"
             });
         }
         const newVehicle = await VehicleModel.create(value)
@@ -43,7 +43,6 @@ export const vehicleEntryController = async (req, res) => {
 export const getVehiclesController = async (req, res) => {
     try {
         const data = await getAllVehicleListWithPagination({ req });
-        console.error('Get All Vehicle:', data);
         return res.status(200).json({
             success: true,
             message: 'Vehicle List',
