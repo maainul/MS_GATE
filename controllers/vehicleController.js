@@ -20,7 +20,7 @@ export const vehicleEntryController = async (req, res) => {
                 error: formattedErrors
             });
         }
-        // Check Alreay Vehicle with Number already exists or Not]
+        // Check Already Vehicle with Number already exists or Not]
         const data = await VehicleModel.findOne({ 'vehicle.numberPlate': req.body.vehicle.numberPlate });
         if (data) {
             return res.status(400).json({
