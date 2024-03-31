@@ -6,7 +6,8 @@ import colors from "colors";
 import dotenv from "dotenv";
 import connectDB from './dbConnection.js';
 import vehicleRoutes from './routes/vehicleRoutes.js'
-import visitorRoutes from "./routes/visitorRoutes.js";
+import visitorRoutes from './routes/visitorRoutes.js'
+import homeRoutes from "./routes/homeRoutes.js";
 
 //configure env
 dotenv.config()
@@ -31,7 +32,7 @@ app.use(cors({
 // Router
 app.use('/api/v1/vehicle', vehicleRoutes)
 app.use('/api/v1/visitor', visitorRoutes)
-
+app.use('/api/v1/home',homeRoutes )
 
 const PORT = process.env.PORT || 8081;
 

@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     return res.status(200).json({
         success: true,
         message: "Fetch data from /",
-        data: "Kustabasa"
+        data: "Hi KutaBasa"
     });
 })
 
