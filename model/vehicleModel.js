@@ -39,7 +39,7 @@ const vehicleEntrySchema = new mongoose.Schema({
   visitors: [visitorSchema], // Array of visitors
   entryTimes: [Date],
   lastUpdate: Date
-});
+},{timestamps:true});
 
 export default mongoose.model("Vehicle", vehicleEntrySchema)
 
