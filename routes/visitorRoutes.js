@@ -1,5 +1,5 @@
 import express from 'express'
-import {getVisitorController, visitorEntryController} from "../controllers/visitorController.js";
+import { getVisitorController, visitorEntryController, getSingleVisitorByIdController } from "../controllers/visitorController.js";
 
 
 //router object
@@ -12,6 +12,7 @@ router.post("/create", visitorEntryController)
 
 // GET || GET USER
 router.get("/list", getVisitorController)
+router.get("/:id", getSingleVisitorByIdController)
 
 
 
