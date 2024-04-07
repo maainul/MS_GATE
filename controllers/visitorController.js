@@ -2,6 +2,9 @@ import { getAllVisitorListWithPagination } from "../services/visitorServices.js"
 import VisitorModel from "../model/visitorModel.js";
 import { validateVisitor } from "../validation/VisitorValidation.js";
 import { getSingleVisitorById } from "../services/getSingleVisitorById.js";
+import { updateSingleVisitorService } from "../services/updateSingleVisitorService.js";
+import { ObjectId } from 'mongodb';
+import {deleteSingleVisitorService} from "../services/deleteSingleVisitorService.js";
 
 export const visitorEntryController = async (req, res) => {
     try {
@@ -79,6 +82,87 @@ export const getSingleVisitorByIdController = async (req, res) => {
         return res.status(200).json({
             success: success,
             message: "Visitor Information",
+            data
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error in Get Visitor',
+            error: error.message || error
+        })
+    }
+};
+
+
+export const updateSingleVisitorController = async (req, res) => {
+    try {
+        const id = req.params.id
+        // updated data is sent in the request body
+        const updatedData = req.body
+
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        console.log(id)
+        console.log(updatedData)
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$")
+
+        // Check if the provided ID is a valid ObjectId
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid visitor ID format"
+            });
+        }
+
+        // Update the visitor by ID with the provided data
+        const { success, message, data } = await updateSingleVisitorService({ id, updatedData })
+
+        if (!success) {
+            return res.status(404).json({
+                success: false,
+                message
+            });
+        }
+        return res.status(200).json({
+            success: success,
+            message: "Visitor Information Updated",
+            data
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error in Get Visitor',
+            error: error.message || error
+        })
+    }
+};
+
+
+
+
+export const deleteSingleVisitorController = async (req, res) => {
+    try {
+        const id = req.params.id
+        console.log(id)
+        // Check if the provided ID is a valid ObjectId
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid visitor ID format"
+            });
+        }
+
+        // Update the visitor by ID with the provided data
+        const { success, message, data } = await deleteSingleVisitorService({ id })
+
+        if (!success) {
+            return res.status(404).json({
+                success: false,
+                message
+            });
+        }
+        return res.status(200).json({
+            success: success,
+            message: "Visitor Information deleted",
             data
         })
     } catch (error) {
