@@ -5,6 +5,7 @@ import { getSingleVisitorById } from "../services/getSingleVisitorById.js";
 import { updateSingleVisitorService } from "../services/updateSingleVisitorService.js";
 import { ObjectId } from 'mongodb';
 import {deleteSingleVisitorService} from "../services/deleteSingleVisitorService.js";
+import {getSingleVehicleById} from "../services/getSingleVehicleById.js";
 
 export const visitorEntryController = async (req, res) => {
     try {
@@ -100,11 +101,6 @@ export const updateSingleVisitorController = async (req, res) => {
         // updated data is sent in the request body
         const updatedData = req.body
 
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$")
-        console.log(id)
-        console.log(updatedData)
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$")
-
         // Check if the provided ID is a valid ObjectId
         if (!ObjectId.isValid(id)) {
             return res.status(400).json({
@@ -173,3 +169,5 @@ export const deleteSingleVisitorController = async (req, res) => {
         })
     }
 };
+
+
