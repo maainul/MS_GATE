@@ -12,10 +12,6 @@ const visitorSchema = new mongoose.Schema({
     },
     referencePeople:{
         type:String
-    },
-    entryTimes:{
-        type:Date
-
     }
 },{timestamps:true})
 

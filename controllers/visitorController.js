@@ -9,6 +9,7 @@ import {getSingleVehicleById} from "../services/getSingleVehicleById.js";
 
 export const visitorEntryController = async (req, res) => {
     try {
+        console.log(req.body)
         const { error, value } = validateVisitor(req.body);
         if (error) {
             const formattedErrors = error.details.map(detail => {
