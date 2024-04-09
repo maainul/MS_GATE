@@ -17,10 +17,12 @@ export const getAllListWithPagination = async ({req,model,queryKeys}) =>{
     let queryResult = model.find(queryObject)
 
     // Sorting
+
     if(sort === 'latest') queryResult = queryResult.sort('-createdAt')
-    if(sort === 'oldest') queryResult = queryResult.sort('createdAt')
-    if(sort === 'a-z') queryResult = queryResult.sort(queryKeys[0])
-    if(sort === 'z-z') queryResult = queryResult.sort(`${queryKeys[0]}`)
+    else if(sort === 'oldest') queryResult = queryResult.sort('createdAt')
+    else if(sort === 'a-z') queryResult = queryResult.sort(queryKeys[0])
+    else if(sort === 'a-z') queryResult = queryResult.sort(`${queryKeys[0]}`)
+    else queryResult = queryResult.sort('-createdAt')
 
     // Pagination
     const page = Number(req.query.page) || 1
@@ -40,7 +42,7 @@ export const getAllListWithPagination = async ({req,model,queryKeys}) =>{
     const numberOfPage = Math.ceil(totalDataCount / limit)
 
     // Execute Query For List of Data
-    const data = await queryResult
+    const data = await queryResult.sort('-createdAt')
 
     return {
         pageDataCount,
