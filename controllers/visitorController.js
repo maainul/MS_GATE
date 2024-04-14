@@ -10,7 +10,6 @@ import {getVisitorListByTodayWithPagination} from "../services/getVisitorListByT
 
 export const visitorEntryController = async (req, res) => {
     try {
-        console.log(req.body)
         const { error, value } = validateVisitor(req.body);
         if (error) {
             const formattedErrors = error.details.map(detail => {
@@ -34,7 +33,10 @@ export const visitorEntryController = async (req, res) => {
             })
         }
         // Save Data to the database
-        const newVisitor = await VisitorModel.create(req.body)
+        const name = req.body.name.trim()
+        const mobileNumber = req.body.mobileNumber.trim()
+        const randomID = mobileNumber + name
+        const newVisitor = await VisitorModel.create({name:name,mobileNumber:mobileNumber,randomID:randomID})
         res.status(201).json({ success: true, newVisitor })
     } catch (error) {
         res.status(500).json({
