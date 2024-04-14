@@ -4,7 +4,8 @@ import {
     visitorEntryController,
     getSingleVisitorByIdController,
     updateSingleVisitorController,
-    deleteSingleVisitorController
+    deleteSingleVisitorController,
+    getVisitorsByTodayController
 } from "../controllers/visitorController.js";
 
 
@@ -19,6 +20,10 @@ router.post("/create", visitorEntryController)
 // GET || GET USER
 router.get("/list", getVisitorController)
 router.get("/:id", getSingleVisitorByIdController)
+
+// ALL VISITOR : TODAY
+router.get("/list/today", getVisitorsByTodayController)
+
 
 // UPDATE VISITOR
 router.put("/:id", updateSingleVisitorController)

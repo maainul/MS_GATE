@@ -6,6 +6,7 @@ import { updateSingleVisitorService } from "../services/updateSingleVisitorServi
 import { ObjectId } from 'mongodb';
 import {deleteSingleVisitorService} from "../services/deleteSingleVisitorService.js";
 import {getSingleVehicleById} from "../services/getSingleVehicleById.js";
+import {getVisitorListByTodayWithPagination} from "../services/getVisitorListByTodayWithPagination.js";
 
 export const visitorEntryController = async (req, res) => {
     try {
@@ -170,5 +171,28 @@ export const deleteSingleVisitorController = async (req, res) => {
         })
     }
 };
+
+
+
+export const getVisitorsByTodayController = async (req, res) => {
+    try {
+        const data = await getVisitorListByTodayWithPagination()
+        return res.status(200).json({
+            success: true,
+            message: "Visitor List By Today",
+            data
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error in Get All Visitor',
+            error: error.message || error
+        })
+    }
+};
+
+
+
+
 
 

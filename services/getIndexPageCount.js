@@ -32,6 +32,25 @@ export const getIndexPageCount = async () =>{
     const currentMonth = today.toLocaleDateString('en-US',{month:'long'})
     const currentYear = today.getFullYear()
 
+    const startYear = new Date(Date.UTC(currentYear, 0, 1));
+    const endYear = new Date(Date.UTC(currentYear, 11, 31));
+
+    console.log(startYear)
+    console.log(endYear)
+    // Current Year Data
+    const currentYearVisitorTotal = await visitorModel.countDocuments({
+        createdAt:{
+            $gte: startYear,
+            $lte: endYear
+        }
+    })
+    const currentYearVehicleTotal = await vehicleModel.countDocuments({
+        createdAt:{
+            $gte: startYear,
+            $lte: endYear
+        }
+    })
+
     return {
         vehicleTotal,
         visitorTotal,
@@ -39,6 +58,8 @@ export const getIndexPageCount = async () =>{
         vehicleTodayTotal,
         visitorTotalCurrentMonth,
         vehicleTotalCurrentMonth,
+        currentYearVehicleTotal,
+        currentYearVisitorTotal,
         currentMonth,
         currentYear
     }
