@@ -1,25 +1,16 @@
 import vehicleModel from "../model/vehicleModel.js"
 import visitorModel from "../model/visitorModel.js"
+import {todayDateAndMonth} from "../utils/todayDateAndMonth.js";
 
 export const getIndexPageCount = async () =>{
     const vehicleTotal = await vehicleModel.countDocuments()
     const visitorTotal = await visitorModel.countDocuments()
 
-    // Get Today's Date
-    const today = new Date()
-    // Set hours, minutes, seconds, and milliseconds to 0 for comparison
-    today.setHours(0,0,0,0) 
+    const {today,firstDayOfMonth} = todayDateAndMonth()
 
     // Get entries for today
     const visitorTodayTotal = await visitorModel.countDocuments({createdAt:{$gte:today}})
     const vehicleTodayTotal = await vehicleModel.countDocuments({createdAt:{$gte:today}})
-
-    // Get the first day of the current Month
-    const firstDayOfMonth = new Date(today.getFullYear(),today.getMonth(),1)
-
-    // Current Month
-    const currentMonth = today.toLocaleDateString('en-US',{month:'long'})
-    const currentYear = today.getFullYear()
 
     // Get entries for this month
     const visitorTotalCurrentMonth = await visitorModel.countDocuments({
@@ -37,6 +28,29 @@ export const getIndexPageCount = async () =>{
         }
     })
 
+    // Current Month and Year
+    const currentMonth = today.toLocaleDateString('en-US',{month:'long'})
+    const currentYear = today.getFullYear()
+
+    const startYear = new Date(Date.UTC(currentYear, 0, 1));
+    const endYear = new Date(Date.UTC(currentYear, 11, 31));
+
+    console.log(startYear)
+    console.log(endYear)
+    // Current Year Data
+    const currentYearVisitorTotal = await visitorModel.countDocuments({
+        createdAt:{
+            $gte: startYear,
+            $lte: endYear
+        }
+    })
+    const currentYearVehicleTotal = await vehicleModel.countDocuments({
+        createdAt:{
+            $gte: startYear,
+            $lte: endYear
+        }
+    })
+
     return {
         vehicleTotal,
         visitorTotal,
@@ -44,8 +58,9 @@ export const getIndexPageCount = async () =>{
         vehicleTodayTotal,
         visitorTotalCurrentMonth,
         vehicleTotalCurrentMonth,
+        currentYearVehicleTotal,
+        currentYearVisitorTotal,
         currentMonth,
         currentYear
-
     }
 }

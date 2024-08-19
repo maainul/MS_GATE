@@ -7,15 +7,8 @@ const visitorSchema = new mongoose.Schema({
     mobileNumber:{
         type:String
     },
-    purpose:{
+    randomID:{
         type:String
-    },
-    referencePeople:{
-        type:String
-    },
-    entryTimes:{
-        type:Date
-
     }
 },{timestamps:true})
 
